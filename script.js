@@ -1,5 +1,5 @@
 const peer = new Peer({
-  key: 'wV5F6ipJkJn/jX93CLN30Xa5MMNzToxfjKY6NMjteDw='  // ここに実際のキーを貼ってください
+  key: 'wV5F6ipJkNMjteDw='  // ここに実際のキーを貼ってください
 });
 
 navigator.mediaDevices.getUserMedia({ video: true, audio: true })
