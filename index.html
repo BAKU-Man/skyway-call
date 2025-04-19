@@ -1,26 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-  <meta charset="utf-8" />
-  <title>SkyWay通話</title>
+  <meta charset="UTF-8" />
+  <title>SkyWay 通話</title>
 </head>
 <body>
-  <h2>SkyWay通話</h2>
-  <video id="local-video" autoplay muted playsinline></video>
-  <video id="remote-video" autoplay playsinline></video>
+  <h2>SkyWay 通話ルーム</h2>
+
+  <p>※カメラとマイクのアクセス許可が必要です</p>
+
+  <video id="local-video" autoplay muted playsinline width="300"></video>
+  <video id="remote-video" autoplay playsinline width="300"></video>
 
   <script src="https://cdn.webrtc.ecl.ntt.com/skyway-latest.js"></script>
   <script>
-    const peer = new Peer({ key: 'wV5F6ipJkJn/jX93CLN30Xa5MMNzToxfjKY6NMjteDw=' });
+    const peer = new Peer({ key: 'wV5F6ipJkJn/jX93CLN30Xa5MMNzToxfjKY6NMjteDw=' }); // 必ずキーを入れてね！
 
     navigator.mediaDevices.getUserMedia({ video: true, audio: true })
       .then(stream => {
         document.getElementById('local-video').srcObject = stream;
-        const roomId = location.pathname.split('/').pop();
+
+        const roomId = location.pathname.split("/").pop();
         const room = peer.joinRoom(roomId, { mode: 'sfu', stream });
+
         room.on('stream', remoteStream => {
           document.getElementById('remote-video').srcObject = remoteStream;
         });
+      })
+      .catch(err => {
+        console.error('カメラ取得エラー:', err);
+        alert('カメラまたはマイクが許可されていないか、利用できません。');
       });
   </script>
 </body>
